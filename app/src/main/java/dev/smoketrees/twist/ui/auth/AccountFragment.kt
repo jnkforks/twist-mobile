@@ -99,7 +99,7 @@ class AccountFragment : Fragment() {
 
                     Result.Status.SUCCESS -> {
                         showViews()
-                        pref.edit { putBoolean(Constants.PreferenceKeys.IS_LOGGED_IN, true) }
+                        pref.edit { putBoolean(Constants.PreferenceKeys.AUTH_TOKEN, true) }
                         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
                         findNavController()
                             .navigate(AccountFragmentDirections.actionAccountFragment2ToMainActivity())

@@ -1,5 +1,6 @@
 package dev.smoketrees.twist.ui.home
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
@@ -18,6 +19,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import dev.smoketrees.twist.R
+import dev.smoketrees.twist.ui.auth.AuthActivity
+import dev.smoketrees.twist.ui.auth.LoginFragmentDirections
 import dev.smoketrees.twist.utils.Constants
 import dev.smoketrees.twist.utils.Messages
 import dev.smoketrees.twist.utils.hide
@@ -38,6 +41,11 @@ class MainActivity : AppCompatActivity() {
         checkAndApplyTheme()
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        if (!pref.contains(Constants.PreferenceKeys.AUTH_TOKEN)) {
+            startActivity(Intent(this, AuthActivity::class.java))
+            finish()
+        }
 
         supportActionBar?.setDisplayShowTitleEnabled(false)
         val spannable = SpannableString(getString(R.string.twist_moe))

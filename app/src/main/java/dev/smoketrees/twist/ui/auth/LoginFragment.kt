@@ -41,7 +41,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (pref.contains(Constants.PreferenceKeys.IS_LOGGED_IN)) {
+        if (pref.contains(Constants.PreferenceKeys.AUTH_TOKEN)) {
             findNavController()
                 .navigate(LoginFragmentDirections.actionLoginFragment2ToMainActivity())
         }
@@ -88,10 +88,12 @@ class LoginFragment : Fragment() {
 
                     Result.Status.SUCCESS -> {
                         showViews()
-                        pref.edit { putBoolean(Constants.PreferenceKeys.IS_LOGGED_IN, true) }
-                        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-                        findNavController()
-                            .navigate(LoginFragmentDirections.actionLoginFragment2ToMainActivity())
+                        if (it.data != null) {
+                            pref.edit { putString(Constants.PreferenceKeys.AUTH_TOKEN, it.data.token) }
+                            (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+                            findNavController()
+                                .navigate(LoginFragmentDirections.actionLoginFragment2ToMainActivity())
+                        }
                     }
 
                     Result.Status.ERROR -> {
